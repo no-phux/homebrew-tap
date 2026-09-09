@@ -1,0 +1,87 @@
+name: Update packages
+
+# One workflow refreshes both packages in the Phux tap. The generic
+# `tap-release` event is the long-term source-repository interface; the two
+# named events keep existing release automation working during the migration.
+
+on:
+  repository_dispatch:
+    types:
+      - tap-release
+      - phux-release
+      - phux-cockpit-release
+      - token-tach-release
+  workflow_dispatch:
+    inputs:
+      tool:
+        description: Single tool to update (blank updates every tool)
+        required: false
+        type: string
+  schedule:
+    # Every fifteen minutes, so a repository does not need a credential to get
+    # its formula updated promptly.
+    #
+    # A dispatch only ever bought latency: this workflow re-resolves the release
+    # and recomputes every digest itself, and ignores whatever the payload said.
+    # Trading instant-but-authenticated for quarter-hourly-and-anonymous lets a
+    # source repository drop its tap token entirely — phui has, and the others
+    # can whenever they like, since the dispatch inputs still work.
+    #
+    # Each run is a no-op when nothing moved (about fifteen seconds per tool,
+    # and commit-update.sh exits early when the rendered file is unchanged), so
+    # the extra frequency costs very little.
+    - cron: "*/15 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-packages
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.select.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+
+      - id: select
+        name: Select tools to update
+        env:
+          DISPATCH_ACTION: ${{ github.event.action }}
+          DISPATCH_TOOL: ${{ github.event.client_payload.tool }}
+          INPUT_TOOL: ${{ inputs.tool }}
+        run: |
+          set -euo pipefail
+          matrix="$(bash .github/scripts/select-tools.sh "$DISPATCH_ACTION" "$DISPATCH_TOOL" "$INPUT_TOOL")"
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+          echo "Updating: $(jq -r '.tool | join(", ")' <<< "$matrix")"
+
+  update:
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      # Serial on purpose. Every job pushes to main, and racing pushes just
+      # burn the rebase-retry budget in commit-update.sh for no wall-clock win —
+      # each tool takes about fifteen seconds.
+      max-parallel: 1
+      matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+
+      - name: Resolve release, verify artifacts, and render
+        run: |
+          set -euo pipefail
+          bash .github/scripts/update-tool.sh "${{ matrix.tool }}" >> "$GITHUB_ENV"
+
+      - name: Commit update with race-safe retry
+        run: |
+          set -euo pipefail
+          path="$(jq -er '.path' "tools/${{ matrix.tool }}.json")"
+          message="$(jq -er '.message' "tools/${{ matrix.tool }}.json")"
+          bash .github/scripts/commit-update.sh "$path" "$message $TAG"

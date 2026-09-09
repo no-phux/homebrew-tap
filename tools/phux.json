@@ -1,0 +1,12 @@
+{
+	"tool": "phux",
+	"repo": "no-phux/phux",
+	"path": "Formula/phux.rb",
+	"message": "Brew formula update for phux",
+	"comment": "Assets are optional: phux ships partial releases, and the renderer emits whatever platforms are actually present. Each artifact is cross-checked against the .sha256 sidecar the release publishes alongside it.",
+	"assets": {
+		"DARWIN_ARM64": { "name": "phux-{tag}-aarch64-apple-darwin.tar.gz", "required": false, "sidecar": true },
+		"LINUX_X64": { "name": "phux-{tag}-x86_64-unknown-linux-gnu.tar.gz", "required": false, "sidecar": true },
+		"LINUX_ARM64": { "name": "phux-{tag}-aarch64-unknown-linux-gnu.tar.gz", "required": false, "sidecar": true }
+	}
+}
