@@ -83,10 +83,9 @@ EOF
   if [ "$notarized" == false ]; then
     cat <<'EOF'
 
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", "#{appdir}/Phux Cockpit.app"],
-                   sudo: false
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args: ["-dr", "com.apple.quarantine", "#{appdir}/Phux Cockpit.app"]
   end
 
   caveats <<~EOS

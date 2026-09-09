@@ -11,7 +11,7 @@ sha256="$(awk -F'"' '/^  sha256 "/ { print $2; exit }' "$cask")"
 [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
 [[ "$sha256" =~ ^[0-9a-f]{64}$ ]]
 notarized=true
-if grep -Fq '  postflight do' "$cask"; then
+if grep -Fq '  postflight_steps do' "$cask"; then
   notarized=false
 fi
 tag="v$version"
@@ -45,8 +45,8 @@ for notarized_mode in false true; do
     exit 1
   fi
   if [[ "$notarized_mode" == false ]]; then
-    grep -Fq '  postflight do' "$generated"
-  elif grep -Fq '  postflight do' "$generated"; then
+    grep -Fq '  postflight_steps do' "$generated"
+  elif grep -Fq '  postflight_steps do' "$generated"; then
     echo "notarized v0.3.0 cask unexpectedly clears quarantine" >&2
     exit 1
   fi

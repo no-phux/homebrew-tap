@@ -4,6 +4,8 @@ Official Homebrew tap for [Phux](https://github.com/no-phux/phux): terminals
 as objects on a wire.
 
 ```sh
+brew trust --tap no-phux/tap # Homebrew 6+
+brew tap no-phux/tap
 brew install no-phux/tap/phux
 brew install --cask no-phux/tap/phux-cockpit
 ```
@@ -19,6 +21,7 @@ The Phux packages now live here. Install this tap and reinstall each Phux
 package from its canonical name:
 
 ```sh
+brew trust --tap no-phux/tap # Homebrew 6+
 brew tap no-phux/tap
 brew reinstall no-phux/tap/phux
 brew reinstall --cask no-phux/tap/phux-cockpit
