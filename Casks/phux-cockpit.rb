@@ -21,7 +21,7 @@ cask "phux-cockpit" do
 
   postflight_steps do
     run "/usr/bin/xattr",
-        args: ["-dr", "com.apple.quarantine", "#{appdir}/Phux Cockpit.app"]
+        args: ["-dr", "com.apple.quarantine", "{{appdir}}/Phux Cockpit.app"]
   end
 
   caveats <<~EOS
