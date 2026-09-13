@@ -1,7 +1,7 @@
 # Generated from tools/phux-cockpit.json. Do not edit by hand.
 cask "phux-cockpit" do
-  version "0.22.0"
-  sha256 "d22c8e630c8a6a1270cda5fcdd5b2b6c03006e5564e882bb5b613ac838983268"
+  version "0.23.2"
+  sha256 "1514d53264385a2a1e0f35c10e24cc0a137c9420ed9414bbdff9500e08f71f3a"
 
   url "https://github.com/no-phux/phux/releases/download/cockpit-v#{version}/phux-cockpit-#{version}-macos-arm64.zip"
   name "Phux Cockpit"
