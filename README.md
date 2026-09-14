@@ -1,6 +1,6 @@
 # no-phux Homebrew tap
 
-Official Homebrew tap for [Phux](https://github.com/no-phux/phux): terminals
+Official Homebrew tap for [phux](https://github.com/no-phux/phux): terminals
 as objects on a wire.
 
 ```sh
@@ -13,11 +13,11 @@ brew install --cask no-phux/tap/phux-cockpit
 | Package | What |
 |---|---|
 | [`phux`](Formula/phux.rb) | Libghostty-backed terminal control plane |
-| [`phux-cockpit`](Casks/phux-cockpit.rb) | Native macOS companion for Phux |
+| [`phux-cockpit`](Casks/phux-cockpit.rb) | Native macOS companion for phux |
 
 ## Moving from `phall1/tap`
 
-The Phux packages now live here. Install this tap and reinstall each Phux
+The phux packages now live here. Install this tap and reinstall each phux
 package from its canonical name:
 
 ```sh
