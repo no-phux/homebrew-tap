@@ -3,8 +3,8 @@
 class Phux < Formula
   desc "Libghostty-backed terminal control plane (not tmux)"
   homepage "https://github.com/no-phux/phux"
-  url "https://github.com/no-phux/phux/releases/download/v0.100.0/phux-v0.100.0-aarch64-apple-darwin.tar.gz"
-  sha256 "f7c9e27c37d4e6afe2b53c2e14317a665fc7e9ab6640bc65cc7505fd1eddfdb7"
+  url "https://github.com/no-phux/phux/releases/download/v0.106.0/phux-v0.106.0-aarch64-apple-darwin.tar.gz"
+  sha256 "9c4040498756dfcb63f14d5d9af247ce83f889322f9eb8a50a7ff3decd8ee18d"
   license any_of: ["MIT", "Apache-2.0"]
 
   livecheck do
@@ -18,12 +18,12 @@ class Phux < Formula
 
   on_linux do
     on_intel do
-      url "https://github.com/no-phux/phux/releases/download/v0.100.0/phux-v0.100.0-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "3095ef6cd5c4cdd201de5c80f7fca480fb361e8f56803b9c528a4a6ef104bcb1"
+      url "https://github.com/no-phux/phux/releases/download/v0.106.0/phux-v0.106.0-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "f0dfdfe572507f51e8df7267f2792f97bb5bab19358a634b92e476f3dcbcec98"
     end
     on_arm do
-      url "https://github.com/no-phux/phux/releases/download/v0.100.0/phux-v0.100.0-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "1de2107c0a03890dabc5a11f021ae6790ac50fe3db6f65dfd0216a12ceadb188"
+      url "https://github.com/no-phux/phux/releases/download/v0.106.0/phux-v0.106.0-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "19d625a3ddcfb292ecdfe1c5cdad9da91db7dbfe6e05e9002c08b262082a9710"
     end
   end
 
