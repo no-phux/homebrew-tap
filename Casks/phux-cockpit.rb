@@ -6,7 +6,7 @@ cask "phux-cockpit" do
   url "https://github.com/no-phux/phux/releases/download/cockpit-v#{version}/phux-cockpit-#{version}-macos-arm64.zip"
   name "Phux Cockpit"
   desc "Native spatial runtime for terminal and web surfaces"
-  homepage "https://github.com/no-phux/phux/tree/main/clients/cockpit"
+  homepage "https://github.com/no-phux/phux/tree/cockpit-v#{version}/clients/cockpit"
 
   livecheck do
     url :url
