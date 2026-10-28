@@ -60,7 +60,7 @@ bash "$root/.github/scripts/gen-phux-cockpit-cask.sh" \
   "$canonical" >/dev/null
 ruby -c "$canonical" >/dev/null
 grep -Fq 'url "https://github.com/no-phux/phux/releases/download/cockpit-v#{version}/' "$canonical"
-grep -Fq 'homepage "https://github.com/no-phux/phux/tree/main/clients/cockpit"' "$canonical"
+grep -Fq 'homepage "https://github.com/no-phux/phux/tree/cockpit-v#{version}/clients/cockpit"' "$canonical"
 grep -Fq 'regex(/^cockpit-v(' "$canonical"
 
 echo "Phux Cockpit cask regeneration check passed"

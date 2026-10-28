@@ -20,7 +20,7 @@ elif [[ "$tag" =~ ^cockpit-v(([0-9]+)\.([0-9]+)\.([0-9]+))$ ]]; then
   minor="${BASH_REMATCH[3]}"
   repo="no-phux/phux"
   release_tag='cockpit-v#{version}'
-  homepage="https://github.com/no-phux/phux/tree/main/clients/cockpit"
+  homepage="https://github.com/no-phux/phux/tree/cockpit-v#{version}/clients/cockpit"
   livecheck_regex='    regex(/^cockpit-v(\d+(?:\.\d+)+)$/i)'
 else
   echo "error: tag must be vMAJOR.MINOR.PATCH or cockpit-vMAJOR.MINOR.PATCH" >&2
