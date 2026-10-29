@@ -7,11 +7,11 @@
 #
 # Usage: select-tools.sh <dispatch-event-action> <dispatch-payload-tool> <manual-input-tool>
 #
-#   phui-release  ""      ""            -> just phui   (per-tool dispatch)
-#   tap-release   phbv    ""            -> just phbv   (generic dispatch)
-#   tap-release   ""      ""            -> everything
-#   ""            ""      token-tach    -> just token-tach (manual run)
-#   ""            ""      ""            -> everything   (schedule)
+#   phux-release  ""            ""             -> just phux
+#   tap-release   phux-desktop  ""             -> just phux-desktop
+#   tap-release   ""            ""             -> everything
+#   ""            ""            phux-desktop   -> just phux-desktop
+#   ""            ""            ""             -> everything (schedule)
 #
 # An unrecognised tool is an error: quietly updating everything because a name
 # was misspelled would hide the mistake behind a green run.

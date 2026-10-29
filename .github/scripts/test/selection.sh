@@ -24,10 +24,10 @@ check() {
 # The named events are retained while source release automation moves to the
 # generic dispatch. A misspelled package must fail rather than updating both.
 check "legacy per-tool dispatch (phux)"          '{"tool":["phux"]}'         phux-release "" ""
-check "legacy per-tool dispatch (phux-cockpit)"  '{"tool":["phux-cockpit"]}' phux-cockpit-release "" ""
+check "desktop per-tool dispatch"                '{"tool":["phux-desktop"]}' phux-desktop-release "" ""
 check "generic dispatch with a payload"          '{"tool":["phux"]}'         tap-release phux ""
 check "generic dispatch with no payload"         "$ALL"                      tap-release "" ""
-check "manual run with an input"                 '{"tool":["phux-cockpit"]}' "" "" phux-cockpit
+check "manual run with an input"                 '{"tool":["phux-desktop"]}' "" "" phux-desktop
 check "schedule"                                "$ALL"                      "" "" ""
 
 if bash .github/scripts/select-tools.sh nope-release "" "" >/dev/null 2>&1; then

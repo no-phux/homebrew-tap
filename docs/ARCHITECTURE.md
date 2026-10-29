@@ -1,8 +1,9 @@
 # Architecture
 
 This repository is the narrowly scoped, official Homebrew tap for Phux. It
-contains only the packages released from [`no-phux/phux`](https://github.com/no-phux/phux):
-the CLI formula and the native Cockpit cask.
+contains the CLI formula and macOS desktop DMG cask released from
+[`no-phux/phux`](https://github.com/no-phux/phux). Mobile apps, FFI archives,
+agent integrations and brand assets are not Homebrew packages.
 
 ## Generated and verified
 
@@ -11,18 +12,23 @@ from a public release and CI rejects a file that does not reproduce exactly.
 
 [`update-packages.yml`](../.github/workflows/update-packages.yml) discovers
 new releases every fifteen minutes and also accepts `tap-release`,
-`phux-release`, and `phux-cockpit-release` dispatches. For each package it:
+`phux-release`, and `phux-desktop-release` dispatches. For each package it:
 
-1. resolves the matching, non-draft release;
+1. resolves the matching, stable, non-draft release;
 2. verifies every artifact URL and SHA-256 digest;
 3. renders the formula or cask; and
 4. commits the update with a race-safe rebase-and-push retry.
 
-`Formula/phux.rb` verifies each artifact against its release-side `.sha256`
-sidecar. `Casks/phux-cockpit.rb` verifies its archive against the release's
-combined `SHA256SUMS` manifest. Artifact URLs must match the exact canonical
-GitHub release URL, so a redirect or repository move is a validation failure,
-not a silent trust change.
+`tools/phux.json` selects `vX.Y.Z` CLI releases; `tools/phux-desktop.json`
+selects `desktop-vX.Y.Z` independently of GitHub's global Latest flag. Both
+verify downloaded artifacts against their release-side `.sha256` sidecars.
+Artifact URLs must match the exact canonical GitHub release URL, so a
+repository move is a validation failure, not a silent trust change.
+
+The desktop cask installs `Phux.app` from the signed, notarized arm64 DMG and
+requires macOS 26 or newer, matching the bundle's minimum version. It does not
+clear quarantine or depend on the separate CLI formula. `cask_renames.json`
+migrates the retired Cockpit cask; no Cockpit release is polled or rendered.
 
 ## Local verification
 
@@ -35,4 +41,5 @@ bash .github/scripts/test/all.sh
 ```
 
 The first command re-renders the versions committed in this repository and
-diffs them. The second exercises dispatch selection and resolver failure modes.
+diffs them. The second exercises dispatch selection, resolver failure modes,
+the desktop cask contract, and adding a package to scheduled discovery.

@@ -1,16 +1,14 @@
 name: Update packages
 
-# One workflow refreshes both packages in the Phux tap. The generic
-# `tap-release` event is the long-term source-repository interface; the two
-# named events keep existing release automation working during the migration.
+# One workflow refreshes every manifest in tools/. Dispatches are optional:
+# scheduled discovery tracks the CLI and desktop release channels independently.
 
 on:
   repository_dispatch:
     types:
       - tap-release
       - phux-release
-      - phux-cockpit-release
-      - token-tach-release
+      - phux-desktop-release
   workflow_dispatch:
     inputs:
       tool:
@@ -24,8 +22,7 @@ on:
     # A dispatch only ever bought latency: this workflow re-resolves the release
     # and recomputes every digest itself, and ignores whatever the payload said.
     # Trading instant-but-authenticated for quarter-hourly-and-anonymous lets a
-    # source repository drop its tap token entirely — phui has, and the others
-    # can whenever they like, since the dispatch inputs still work.
+    # source repository avoid a tap token entirely; dispatch inputs still work.
     #
     # Each run is a no-op when nothing moved (about fifteen seconds per tool,
     # and commit-update.sh exits early when the rendered file is unchanged), so

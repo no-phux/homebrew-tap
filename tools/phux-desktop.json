@@ -1,0 +1,11 @@
+{
+	"tool": "phux-desktop",
+	"repo": "no-phux/phux",
+	"tag-prefix": "desktop-v",
+	"path": "Casks/phux-desktop.rb",
+	"message": "Brew cask update for Phux Desktop",
+	"comment": "The stable macOS DMG is Developer ID signed and notarized. Verify the downloaded DMG against its release-side SHA-256 sidecar.",
+	"assets": {
+		"DMG": { "name": "phux-desktop-{version}-macos-arm64.dmg", "sidecar": true }
+	}
+}
