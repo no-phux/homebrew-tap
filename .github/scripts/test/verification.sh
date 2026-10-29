@@ -64,7 +64,7 @@ expect_fail "a missing checksum manifest is fatal" tools/zzz-neg.json "error"
 # A sidecar demand the release cannot satisfy must fail too.
 cat > tools/zzz-neg.json <<'JSON'
 {
-	"tool": "zzz-neg", "repo": "no-phux/phux-cockpit", "path": "Formula/zzz-neg.rb", "message": "x",
+	"tool": "zzz-neg", "repo": "no-phux/phux", "tag-prefix": "desktop-v", "path": "Formula/zzz-neg.rb", "message": "x",
 	"assets": { "ARCHIVE": { "name": "SHA256SUMS", "sidecar": true } }
 }
 JSON
@@ -75,14 +75,18 @@ expect_fail "an unverifiable sidecar is fatal" tools/zzz-neg.json "no verifiable
 expect_pass "a real release with matching sidecars passes" tools/phux.json
 expect_pass "a pinned release with matching sidecars passes" tools/phux.json v0.27.1
 
-# A repository migration keeps explicitly pinned standalone releases resolvable
-# while preferring the canonical component-tag source after cutover.
-expect_pass "Cockpit falls back to its standalone release before cutover" tools/phux-cockpit.json v0.16.1
-fallback_tag="$(bash .github/scripts/resolve-release.sh tools/phux-cockpit.json "$work/cockpit-fallback" | awk -F= '$1 == "TAG" { print $2; exit }')"
-if [[ "$fallback_tag" == cockpit-v* ]]; then
-	echo "ok   Cockpit latest release selects the canonical component tag"
+# Desktop must follow its own stable channel, not the CLI GitHub Latest flag.
+expect_pass "a pinned desktop DMG with matching sidecar passes" tools/phux-desktop.json desktop-v0.49.0
+if bash .github/scripts/resolve-release.sh tools/phux-desktop.json "$work/desktop-latest" > "$work/desktop.env" &&
+	grep -qE '^TAG=desktop-v[0-9]+\.[0-9]+\.[0-9]+$' "$work/desktop.env"; then
+	echo "ok   desktop latest selects the independent component tag"
 else
-	echo "FAIL Cockpit latest release selected ${fallback_tag:-nothing}, expected a canonical cockpit-v* tag"; FAILED=1
+	echo "FAIL desktop latest did not resolve a verified desktop-v release"; FAILED=1
+fi
+if bash .github/scripts/resolve-release.sh tools/phux-desktop.json "$work/wrong-channel" v0.113.1 >/dev/null 2>&1; then
+	echo "FAIL desktop accepted a CLI release tag"; FAILED=1
+else
+	echo "ok   desktop refuses a CLI release tag"
 fi
 
 exit "$FAILED"

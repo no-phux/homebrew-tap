@@ -33,9 +33,12 @@ trap 'rm -rf "$work"' EXIT
 
 # `set -a` so the KEY=value lines resolve-release.sh emits become environment
 # for the renderer without this script having to know any tool's asset keys.
+# Wait for verification to succeed before sourcing any partial output. Process
+# substitution hides a resolver failure and can render an unverified artifact.
+bash "$root/.github/scripts/resolve-release.sh" "$manifest" "$work" "$release_tag" > "$work/resolved.env"
 set -a
-# shellcheck disable=SC1090
-source <(bash "$root/.github/scripts/resolve-release.sh" "$manifest" "$work" "$release_tag")
+# shellcheck disable=SC1091
+source "$work/resolved.env"
 set +a
 
 bash "$renderer" "$out"

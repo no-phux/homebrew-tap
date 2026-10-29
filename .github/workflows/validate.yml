@@ -32,6 +32,6 @@ jobs:
   #     - name: Check generated phux packages
   #       run: |
   #         bash .github/scripts/check-phux-formula.sh
-  #         bash .github/scripts/check-phux-cockpit-cask.sh
+  #         bash .github/scripts/test/desktop-cask.sh
   #     - name: Run Homebrew tap checks
   #       run: brew test-bot --only-tap-syntax

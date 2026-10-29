@@ -6,7 +6,7 @@ set -uo pipefail
 cd "$(dirname "$0")" || exit 1
 
 FAILED=0
-for suite in selection verification add-a-tool; do
+for suite in selection desktop-cask pipeline verification add-a-tool; do
 	echo "== $suite"
 	if bash "$suite.sh"; then
 		echo
