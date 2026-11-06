@@ -1,7 +1,7 @@
 # Generated from tools/phux-desktop.json. Do not edit by hand.
 cask "phux-desktop" do
-  version "0.56.1"
-  sha256 "9721e383d71a43a4df16ff3d24e7d81575c86d98138830dfb285ecd165d40a69"
+  version "0.57.0"
+  sha256 "87ad80b989ba3ce561c37479853a2c4a7fe67c8e9dfc43fd020d94a1cf1bb8b7"
 
   url "https://github.com/no-phux/phux/releases/download/desktop-v#{version}/phux-desktop-#{version}-macos-arm64.dmg"
   name "Phux"
