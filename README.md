@@ -4,10 +4,20 @@ Official Homebrew tap for [phux](https://github.com/no-phux/phux): terminals
 as objects on a wire.
 
 ```sh
-brew trust --tap no-phux/tap # Homebrew 6+
-brew tap no-phux/tap
 brew install no-phux/tap/phux
 brew install --cask no-phux/tap/phux-desktop
+```
+
+On Homebrew 6 and later, `brew install no-phux/tap/phux` trusts only the
+`phux` formula, and `brew install --cask no-phux/tap/phux-desktop` trusts
+only the `phux-desktop` cask. Short names need `brew trust --formula` or
+`brew trust --cask` first:
+
+```sh
+brew trust --formula no-phux/tap/phux
+brew install phux
+brew trust --cask no-phux/tap/phux-desktop
+brew install --cask phux-desktop
 ```
 
 | Package | What |
@@ -30,12 +40,9 @@ brew uninstall --cask phux-cockpit
 brew install --cask no-phux/tap/phux-desktop
 ```
 
-If you still use `phall1/tap`, add this tap and reinstall the CLI from its
-canonical name:
+If you still use `phall1/tap`, reinstall the CLI from its canonical name:
 
 ```sh
-brew trust --tap no-phux/tap # Homebrew 6+
-brew tap no-phux/tap
 brew reinstall no-phux/tap/phux
 ```
 

@@ -5,7 +5,7 @@ class Phux < Formula
   homepage "https://github.com/no-phux/phux"
   url "https://github.com/no-phux/phux/releases/download/v0.147.0/phux-v0.147.0-aarch64-apple-darwin.tar.gz"
   sha256 "ff02810f1727f5389887408404e1d10ab63f465d190b4dca2a9bf853afd4a287"
-  license any_of: ["MIT", "Apache-2.0"]
+  license "Apache-2.0"
 
   livecheck do
     url :stable

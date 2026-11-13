@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
-# Keep this renderer in sync with no-phux/phux/scripts/gen-formula.sh.
+# Render the Homebrew formula for phux.
+#
+# no-phux/homebrew-tap copies this file to .github/scripts/gen-phux-formula.sh
+# and re-renders Formula/phux.rb from verified release checksums. This script
+# does not publish the tap, sign a release, or change release.yml.
+#
+# Usage: scripts/gen-formula.sh <tag> <dist-dir> [out-file]
 set -euo pipefail
 
-tag="${1:?usage: gen-phux-formula.sh <tag> <dist-dir> [out-file]}"
-dist="${2:?usage: gen-phux-formula.sh <tag> <dist-dir> [out-file]}"
+tag="${1:?usage: gen-formula.sh <tag> <dist-dir> [out-file]}"
+dist="${2:?usage: gen-formula.sh <tag> <dist-dir> [out-file]}"
 base="https://github.com/no-phux/phux/releases/download/${tag}"
 
 sha() {
@@ -54,7 +60,7 @@ class Phux < Formula
   homepage "https://github.com/no-phux/phux"
   url "${base}/phux-${tag}-${primary_target}.tar.gz"
   sha256 "${primary_sha}"
-  license any_of: ["MIT", "Apache-2.0"]
+  license "Apache-2.0"
 
   livecheck do
     url :stable
