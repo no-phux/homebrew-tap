@@ -19,6 +19,8 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - name: Formula license and regeneration contract
+        run: bash .github/scripts/check-phux-formula.sh
       - name: Every package reproduces byte for byte
         run: bash .github/scripts/verify-renders.sh
       - name: Selection, verification, and add-a-package suites

@@ -6,6 +6,8 @@ formula="$root/Formula/phux.rb"
 tmp="$(mktemp -d "${TMPDIR:-/tmp}/phux-formula-check.XXXXXX")"
 trap 'rm -rf "$tmp"' EXIT
 
+grep -Fxq '  license "Apache-2.0"' "$formula"
+
 tag="$(grep -Eo 'releases/download/v[0-9]+\.[0-9]+\.[0-9]+/' "$formula" | head -1 | cut -d/ -f3)"
 [[ "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
 
